@@ -1,0 +1,57 @@
+﻿@page "/roomDetials"
+@page "/roomDetials/{id}/{name}"
+
+@using Blazor.WASM.Models
+@using System.Web
+@using Blazor.WASM.Contracts
+
+@inject NavigationManager navManager
+@inject IRoomService _roomService
+
+<NavLink class="btn btn-success" href="/rooms">
+    GoTo Rooms
+</NavLink>
+
+<h1> @room.Id - @room.Name - @room.Price</h1>
+
+
+
+@code {
+
+    [Parameter]
+    public string id { get; set; }
+
+    [Parameter]
+    public string name { get; set; }
+
+    int ID = 0;
+    Room room;
+
+    protected override void OnInitialized()
+    {
+        GetIdFromQuery();
+
+        ID = id is null ? GetIdFromQuery() : Convert.ToInt32(id);
+
+        room = GetRoom(ID);
+    }
+
+
+    private int GetIdFromQuery()
+    {
+        var AbsoltUri = new Uri(navManager.Uri);
+        var queryParam = HttpUtility.ParseQueryString(AbsoltUri.Query);
+        if (queryParam["id"] is not null)
+        {
+            var ID = queryParam["id"];
+            var Nam = queryParam["name"];
+            return Convert.ToInt32(ID);
+        }
+        return 0;
+    }
+
+    private Room GetRoom(int id)
+    {
+        return _roomService.GetRoomById(id);
+    }
+}

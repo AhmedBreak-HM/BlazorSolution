@@ -1,0 +1,60 @@
+﻿@page "/rooms"
+
+@using Blazor.WASM.Models
+@using Blazor.WASM.Contracts
+
+@inject IRoomService roomService
+
+<h3>RoomList</h3>
+<table class="table table-bordered table-hover table-sm text-center">
+    <thead class="bg-dark text-light font-weight-bold">
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Price</td>
+            <td>Details</td>
+            <td>Details</td>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var room in rooms)
+        {
+            <tr>
+                <td>@room.Id</td>
+                <td>@room.Name</td>
+                <td>@room.Price.ToString("c")</td>
+                <td>
+                    <NavLink class="btn btn-success" href="@GetLink(room.Id,room.Name)">
+                        <span class="oi oi-document" aria-hidden="true"></span> PrameterRoter
+                    </NavLink>
+
+                </td>
+                <td>
+                    <NavLink class="btn btn-info" href="@GetQueryParams(room.Id,room.Name)">
+                        <span class="oi oi-document" aria-hidden="true"></span> QueryParams
+                    </NavLink>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    private List<Room> rooms = new List<Room>();
+
+
+    protected override void OnInitialized()
+    {
+        rooms = roomService.GetRooms();
+
+    }
+
+    private string GetLink(int id, string name) => $"roomDetials/{id}/{name}";
+
+    private string GetQueryParams(int id, string name) => $"/roomDetials?id={id}&name={name}";
+
+}
+
