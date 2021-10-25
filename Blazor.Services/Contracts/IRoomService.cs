@@ -1,7 +1,7 @@
-﻿using Blazor.WASM.Models;
+﻿using Blazor.Models;
 using System.Collections.Generic;
 
-namespace Blazor.WASM.Contracts
+namespace Blazor.Contracts
 {
     public interface IRoomService
     {

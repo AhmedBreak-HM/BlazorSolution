@@ -1,42 +1,50 @@
 ﻿@page "/addProduct"
 @page "/addProduct/{id}"
 
-@using Blazor.WASM.Models
-@using Blazor.WASM.Contracts
+@using Blazor.Models
+@using Blazor.Contracts
 
 @inject IProductService _ProductService
 
 <h3>@title</h3>
 
-<EditForm Model="@Product" OnValidSubmit="AddEditProduct">
+
+<EditForm Model="@product" OnValidSubmit="AddEditProduct">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <InputText id="name" @bind-Value="Product.Name" />
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <InputText id="name" @bind-Value="product.Name" />
     <button type="submit" class="btn btn-success">Submit</button>
 </EditForm>
 
 @code {
 
     private string title;
+    private Product product;
 
     [Parameter]
     public string id { get; set; }
-    public Product Product { get; set; }
+
 
     protected override void OnInitialized()
     {
         title = id is null ? "Create New Product" : "Update Product";
         var ID = Convert.ToInt32(id);
-        Product = _ProductService.GetProductById(ID);
+        product = _ProductService.GetProductById(ID);
+    }
+    protected override void OnParametersSet()
+    {
+        product = new Product();
 
     }
 
     private void AddEditProduct()
     {
-        if (Product is null)
-            _ProductService.AddProduct(Product);
+        if (product is null)
+            _ProductService.AddProduct(product);
         else
-            _ProductService.UpdateProduct(Product);
+            _ProductService.UpdateProduct(product);
 
     }
 }

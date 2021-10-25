@@ -1,5 +1,5 @@
-using Blazor.WASM.Contracts;
-using Blazor.WASM.Services;
+using Blazor.Contracts;
+using Blazor.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

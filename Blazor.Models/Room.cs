@@ -1,4 +1,4 @@
-﻿namespace Blazor.WASM.Models
+﻿namespace Blazor.Models
 {
     public class Room
     {

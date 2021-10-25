@@ -1,10 +1,10 @@
-﻿using Blazor.WASM.Contracts;
-using Blazor.WASM.Models;
+﻿using Blazor.Contracts;
+using Blazor.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blazor.WASM.Services
+namespace Blazor.Services
 {
     public class ProductService : IProductService
     {

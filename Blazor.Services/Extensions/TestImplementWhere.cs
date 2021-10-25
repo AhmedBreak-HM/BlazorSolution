@@ -1,4 +1,4 @@
-﻿using Blazor.WASM.Models;
+﻿using Blazor.Models;
 using System.Collections.Generic;
 using System.Linq;
 

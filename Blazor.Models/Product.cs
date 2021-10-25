@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blazor.WASM.Models
+namespace Blazor.Models
 {
     public class Product
     {
