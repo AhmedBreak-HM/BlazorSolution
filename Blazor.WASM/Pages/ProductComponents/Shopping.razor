@@ -1,0 +1,36 @@
+﻿@page "/Shopping"
+@using Blazor.WASM.Models
+
+
+<div class="row">
+    <div class="col-10">  <h3>Shopping</h3>  </div>
+    <div class="col-2  mr-lg-auto">
+        <a class="nav-link " style="font-size:large;">
+            <i class="oi oi-cart font-weight-bolder" aria-hidden="true"></i>
+
+            <span class="badge badge-pill badge-warning">@count</span>
+        </a>
+    </div>
+</div>
+
+<ProductCart OnAddCart="CountPlus" OnAddProduct=" (productarrg) =>  product = productarrg"></ProductCart>
+
+<div>
+    @if (product is not null)
+    {
+        <h1 class=" text-success"> @product.Id - @product.Name - @product.Price </h1>
+
+    }
+</div>
+
+
+@code {
+    private int count = 0;
+    private Product product;
+    private void CountPlus(int counter)
+    {
+        count = counter;
+
+    }
+
+}

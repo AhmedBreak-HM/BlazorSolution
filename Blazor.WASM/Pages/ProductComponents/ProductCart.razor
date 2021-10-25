@@ -1,0 +1,77 @@
+﻿
+@using Blazor.WASM.Contracts
+@using Blazor.WASM.Models
+
+@inject IProductService _productService
+<div class="container-fluid">
+    <div class="row mb-4 mt-4">
+        <div class="col-10">
+            <h3 class="text-primary">ProductCart</h3>
+
+        </div>
+        <div class="col-2 ">
+            <NavLink class="btn btn-outline-primary btn-block" href="addProduct">
+                <span class="oi oi-plus" aria-hidden="true"></span> New Product
+            </NavLink>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var product in products)
+        {
+            <div class="col-12 col-md-6 col-lg-4 pb-4">
+                <div class="card">
+                    <div class="card-header">
+                        @product.Name
+                    </div>
+                    <div class="card-body">
+                        <img class="card-img" src="@product.Img" style="height:250px" />
+                        <h4 class="card-title font-weight-bold text-primary"> Price: @product.Price$</h4>
+                        <h5 class="card-subtitle text-danger"> Dis: 10% </h5>
+                    </div>
+                    <div class="card-footer">
+
+                        <button class="btn btn-block btn-info" @onclick="(args) =>  AddToCart(args, product)"> Add To Cart EventCallBack</button>
+                        @*<button class="btn btn-block btn-primary" @onclick=" async () => await OnAddCart.InvokeAsync(88) "> Add To Cart</button>*@
+                        <button class="btn btn-block btn-outline-info" @onclick="async ()=> await OnAddProduct.InvokeAsync(product)">AnyonmusMethod EventCallBack</button>
+                        <NavLink class="btn btn-block btn-outline-warning" href="@GetUri(product.Id)">
+                            Edit Product
+                        </NavLink>
+
+                    </div>
+                </div>
+
+            </div>
+        }
+
+
+    </div>
+</div>
+@code {
+
+    [Parameter]
+    public EventCallback<int> OnAddCart { get; set; }
+
+    [Parameter]
+    public EventCallback<Product> OnAddProduct { get; set; }
+
+    private IReadOnlyList<Product> products;
+    private List<Product> cart = new List<Product>();
+
+
+
+    protected override void OnInitialized()
+    {
+        products = _productService.GetProducts();
+    }
+
+    protected async Task AddToCart(MouseEventArgs e, Product product)
+    {
+        cart.Add(product);
+        await OnAddCart.InvokeAsync(cart.Count);
+    }
+
+    private string GetUri(int id) => $"addProduct/{id}";
+}
+
+
+}

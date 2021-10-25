@@ -22,6 +22,7 @@ namespace Blazor.WASM
             //...builder.Services.AddSingleton<RoomService>();
 
             builder.Services.AddScoped(typeof(IRoomService), typeof(RoomService));
+            builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
 
             builder.RootComponents.Add<App>("#app");
 
