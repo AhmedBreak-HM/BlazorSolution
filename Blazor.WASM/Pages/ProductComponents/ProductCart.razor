@@ -1,8 +1,11 @@
 ﻿
 @using Blazor.Contracts
 @using Blazor.Models
+@using Blazor.WASM.IServices
 
 @inject IProductService _productService
+@inject IProductServiceHttp _productServiceHttp
+
 <div class="container-fluid">
     <div class="row mb-4 mt-4">
         <div class="col-10">
@@ -59,9 +62,15 @@
 
 
 
-    protected override void OnInitialized()
+    //protected override void OnInitialized()
+    //{
+    //    products = _productService.GetProducts();
+    //}
+
+    protected override async Task OnInitializedAsync()
     {
-        products = _productService.GetProducts();
+        products = await _productServiceHttp.GetProducts();
+
     }
 
     protected async Task AddToCart(MouseEventArgs e, Product product)
