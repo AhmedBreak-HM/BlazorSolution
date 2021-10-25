@@ -8,7 +8,7 @@ namespace Blazor.Services
 {
     public class ProductService : IProductService
     {
-        private List<Product> products = new List<Product>();
+        private static List<Product> products = new List<Product>();
         public ProductService()
         {
             products.Add(new Product
