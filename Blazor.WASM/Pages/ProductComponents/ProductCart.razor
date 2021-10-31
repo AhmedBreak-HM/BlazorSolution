@@ -1,5 +1,4 @@
-﻿
-@using Blazor.Contracts
+﻿@using Blazor.Contracts
 @using Blazor.Models
 @using Blazor.WASM.IServices
 
@@ -18,36 +17,48 @@
             </NavLink>
         </div>
     </div>
-    <div class="row">
-        @foreach (var product in products)
-        {
-            <div class="col-12 col-md-6 col-lg-4 pb-4">
-                <div class="card">
-                    <div class="card-header">
-                        @product.Name
-                    </div>
-                    <div class="card-body">
-                        <img class="card-img" src="@product.Img" style="height:250px" />
-                        <h4 class="card-title font-weight-bold text-primary"> Price: @product.Price$</h4>
-                        <h5 class="card-subtitle text-danger"> Dis: 10% </h5>
-                    </div>
-                    <div class="card-footer">
+    @if (products == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var product in products)
+            {
+                <div class="col-12 col-md-6 col-lg-4 pb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            @product.Name
+                        </div>
+                        <div class="card-body">
+                            <img class="card-img" src="@product.Img" style="height:250px" />
+                            <h4 class="card-title font-weight-bold text-primary"> Price: @product.Price$</h4>
+                            <h5 class="card-subtitle text-danger"> Dis: 10% </h5>
+                        </div>
+                        <div class="card-footer">
 
-                        <button class="btn btn-block btn-info" @onclick="(args) =>  AddToCart(args, product)"> Add To Cart EventCallBack</button>
-                        @*<button class="btn btn-block btn-primary" @onclick=" async () => await OnAddCart.InvokeAsync(88) "> Add To Cart</button>*@
-                        <button class="btn btn-block btn-outline-info" @onclick="async ()=> await OnAddProduct.InvokeAsync(product)">AnyonmusMethod EventCallBack</button>
-                        <NavLink class="btn btn-block btn-outline-warning" href="@GetUri(product.Id)">
-                            Edit Product
-                        </NavLink>
+                            <button class="btn btn-block btn-info" @onclick="(args) =>  AddToCart(args, product)"> Add To Cart
+                                EventCallBack</button>
+                            @*<button class="btn btn-block btn-primary" @onclick=" async () => await OnAddCart.InvokeAsync(88)
+                                "> Add To Cart</button>*@
+                            <button class="btn btn-block btn-outline-info"
+                        @onclick="async ()=> await OnAddProduct.InvokeAsync(product)">AnyonmusMethod
+                                EventCallBack</button>
+                            <NavLink class="btn btn-block btn-outline-warning" href="@GetUri(product.Id)">
+                                Edit Product
+                            </NavLink>
 
+                        </div>
                     </div>
+
                 </div>
-
-            </div>
-        }
+            }
 
 
-    </div>
+        </div>
+    }
+
 </div>
 @code {
 
@@ -64,7 +75,7 @@
 
     //protected override void OnInitialized()
     //{
-    //    products = _productService.GetProducts();
+    // products = _productService.GetProducts();
     //}
 
     protected override async Task OnInitializedAsync()
@@ -80,7 +91,7 @@
     }
 
     private string GetUri(int id) => $"addProduct/{id}";
-}
+
 
 
 }

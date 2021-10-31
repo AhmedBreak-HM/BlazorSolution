@@ -32,6 +32,9 @@ namespace Blazor.API
             services.AddSingleton(typeof(IProductService), typeof(ProductService));
 
             services.AddControllers();
+
+            services.AddCors();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Blazor.API", Version = "v1" });
@@ -49,6 +52,13 @@ namespace Blazor.API
             }
 
             app.UseHttpsRedirection();
+
+            // add Corss MidllWare 
+            app.UseCors(builder => builder
+                     .WithOrigins("https://localhost:5010")
+                     .AllowAnyMethod()
+                     .AllowAnyHeader()
+                     .AllowCredentials());
 
             app.UseRouting();
 

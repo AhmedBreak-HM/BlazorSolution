@@ -41,7 +41,7 @@ namespace Blazor.API.Controllers
             _productService.UpdateProduct(product);
             return product;
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public ActionResult<Product> DeleteProduct(int id)
         {
             _productService.DeleteProduct(id);
