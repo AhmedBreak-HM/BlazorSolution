@@ -5,6 +5,7 @@
 @using Blazor.Contracts
 
 @inject IProductService _ProductService
+@inject IJSRuntime IJSRuntime
 
 <h3>@title</h3>
 
@@ -14,14 +15,16 @@
     <ValidationSummary />
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <InputText id="name" @bind-Value="product.Name" />
+    <InputText id="Name" @bind-Value="product.Name" />
     <button type="submit" class="btn btn-success">Submit</button>
 </EditForm>
+
+
 
 @code {
 
     private string title;
-    private Product product;
+    Product product  = new Product();
 
     [Parameter]
     public string id { get; set; }
@@ -30,21 +33,33 @@
     protected override void OnInitialized()
     {
         title = id is null ? "Create New Product" : "Update Product";
+
         var ID = Convert.ToInt32(id);
-        product = _ProductService.GetProductById(ID);
-    }
-    protected override void OnParametersSet()
-    {
-        product = new Product();
-
+        if(id != null )
+         product = _ProductService.GetProductById(ID);
     }
 
-    private void AddEditProduct()
+
+
+    
+
+    private async Task AddEditProduct()
     {
-        if (product is null)
+
+        if (id is null)
+        {
             _ProductService.AddProduct(product);
+            await IJSRuntime.InvokeVoidAsync("displayToastr", "success", "Added Done");
+        }
+
+
         else
+        {
             _ProductService.UpdateProduct(product);
+            await IJSRuntime.InvokeVoidAsync("displayToastr", "info", "Updated Done");
+        }
+
 
     }
+
 }

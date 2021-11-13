@@ -73,16 +73,16 @@
 
 
 
-    //protected override void OnInitialized()
-    //{
-    // products = _productService.GetProducts();
-    //}
+    protected override void OnInitialized()
+    {
+     products = _productService.GetProducts();
+    }
 
-    protected override async Task OnInitializedAsync()
+    @* protected override async Task OnInitializedAsync()
     {
         products = await _productServiceHttp.GetProducts();
 
-    }
+    } *@
 
     protected async Task AddToCart(MouseEventArgs e, Product product)
     {
